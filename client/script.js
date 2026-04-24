@@ -1,13 +1,13 @@
 // 1. Global Variables & Configuration
 const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
     ? `http://${window.location.hostname}:5000`
-    : 'https://athar-api.onrender.com'; // ✅ تم التحديث لرابط السيرفر الخاص بك على Render
+    : 'https://athar01.vercel.app'; // ✅ تم التحديث لرابط السيرفر الخاص بك على Render
 
 let selectedPackageData = null;
 let currentMethod = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     // 2. Initial State Checks
     const checkUserStatus = async () => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const sessionId = urlParams.get('session_id') || localStorage.getItem('athar_last_session');
             const submitBtn = document.getElementById('submit-order');
-            
+
             if (!sessionId && !localStorage.getItem('athar_user')) {
                 alert('عذراً، يجب إتمام الدفع أو تسجيل الدخول أولاً');
                 return;
@@ -288,20 +288,20 @@ function selectPaymentMethod(method) {
     currentMethod = method;
     const cards = document.querySelectorAll('.payment-method-card');
     cards.forEach(c => c.classList.remove('selected'));
-    
+
     const standardVal = document.getElementById('standard-payment-val');
     const premiumCard = document.getElementById('premium-card-ui');
     const instText = document.getElementById('method-instruction');
     const destValue = document.getElementById('payment-dest-value');
 
     document.getElementById('manual-payment-details').style.display = 'block';
-    
+
     if (method === 'vodafone_cash') {
         cards[0].classList.add('selected');
         standardVal.style.display = 'block';
         premiumCard.style.display = 'none';
         instText.textContent = 'قم بتحويل المبلغ إلى رقم فودافون كاش التالي:';
-        destValue.textContent = '01028746064'; 
+        destValue.textContent = '01028746064';
     } else if (method === 'instapay') {
         cards[1].classList.add('selected');
         standardVal.style.display = 'none';
@@ -369,7 +369,7 @@ async function checkNewResults() {
         if (response.ok) {
             const orders = await response.json();
             const completedOrders = orders.filter(o => o.status === 'completed');
-            
+
             if (completedOrders.length > 0) {
                 // Find the newest completion date
                 const latestCompleted = new Date(Math.max(...completedOrders.map(o => new Date(o.completedAt || 0))));
